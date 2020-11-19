@@ -1,0 +1,2 @@
+export const HIERARCHY_GEOGRAPHY = 0;
+export const HIERARCHY_SUBJECT_MATTER = 1;
