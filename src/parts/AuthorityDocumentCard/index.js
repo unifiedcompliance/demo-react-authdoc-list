@@ -194,7 +194,7 @@ const CustomizedDialogs = ( { cardDocId, onClose } ) => {
             </Grid>
             <Grid item xs={12}>
               <List className={classes.bigList}>{
-                authorityDocument.ADMapping && authorityDocument.ADMapping['@set'].map((item, idx) => (
+                authorityDocument.ADMappings && authorityDocument.ADMappings['@set'].map((item, idx) => (
                   <ListItem key={idx}>
                     <MappedVersion data={item} />
                   </ListItem>
