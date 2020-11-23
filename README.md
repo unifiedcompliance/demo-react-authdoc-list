@@ -33,6 +33,10 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 feel obligated to use this feature. However, we understand that this tool wouldn’t be useful if you couldn’t customize it 
 when you are ready for it.
 
+## Demo
+
+You can find a live demo [here](http://grcschema-demo.unifiedcompliance.com/react/).
+
 ## Resources
 
 The [GRC Schema documentation](http://grcschema.org) can be used for reference of object return structures.
