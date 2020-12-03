@@ -35,7 +35,7 @@ when you are ready for it.
 
 ## Demo
 
-You can find a live demo [here](http://grcschema-demo.unifiedcompliance.com/react/).
+You can find a live demo [here](https://developer.unifiedcompliance.com/demo/react/.
 
 ## Resources
 
