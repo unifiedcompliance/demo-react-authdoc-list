@@ -132,7 +132,7 @@ const CustomizedDialogs = ( { cardDocId, onClose } ) => {
                   <Typography
                     style={{ fontWeight: "Bold", height: 30, display: 'flex', alignItems: 'center' }}
                   >
-                    Date:
+                    Effective Date:
                   </Typography>
                 </Box>
                 <Box
