@@ -84,6 +84,21 @@ const CustomizedDialogs = ( { cardDocId, onClose } ) => {
     dispatch(fetchAuthorityDocumentStart({ cardDocId }))
   }, []);
 
+  const dateFormat = (value) => {
+    if (!value || value === 'unknown') {
+      return 'unknown';
+    }
+
+    let d = new Date(value);
+
+    if (Number.isNaN(d.getMonth())) {
+      let arr = value.split(/[- :]/);
+      d = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
+    }
+
+    return d.toLocaleDateString('en-US');
+  };
+
   const classes = useStyles();
   return (
     <>
@@ -148,7 +163,7 @@ const CustomizedDialogs = ( { cardDocId, onClose } ) => {
                     {authorityDocument.pages ? authorityDocument.pages : 'unknown'}
                   </Typography>
                   <Typography style={{ fontWeight: 400, height: 30, display: 'flex', alignItems: 'center' }}>
-                    { authorityDocument.effective_date ? authorityDocument.effective_date : 'unknown' }
+                    { authorityDocument.effective_date ? dateFormat(authorityDocument.effective_date) : 'unknown' }
                   </Typography>
                 </Box>
               </Box>

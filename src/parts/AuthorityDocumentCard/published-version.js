@@ -7,6 +7,21 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
 const PublishedVersion = ({ data }) => {
+  const dateFormat = (value) => {
+    if (!value || value === 'unknown') {
+      return 'unknown';
+    }
+
+    let d = new Date(value);
+
+    if (Number.isNaN(d.getMonth())) {
+      let arr = value.split(/[- :]/);
+      d = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
+    }
+
+    return d.toLocaleDateString('en-US');
+  };
+
   return (
     <Card style={{ width: "100%" }} variant="outlined">
       <CardContent>
@@ -69,7 +84,7 @@ const PublishedVersion = ({ data }) => {
               { (data.volume || data.vomlume_issue )? data.vomlume_issue + data.vomlume_issue : 'unknown' }
             </Typography>
             <Typography style={{ marginBottom: 8, fontWeight: 400, height: 30, display: 'flex', alignItems: 'center' }}>
-              {data.published_date ? data.published_date : 'unknown'}
+              {data.published_date ? dateFormat(data.published_date) : 'unknown'}
             </Typography>
           </Box>
         </Box>
