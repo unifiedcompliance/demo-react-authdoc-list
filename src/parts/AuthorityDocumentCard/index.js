@@ -82,7 +82,7 @@ const CustomizedDialogs = ( { cardDocId, onClose } ) => {
 
   useEffect(() => {
     dispatch(fetchAuthorityDocumentStart({ cardDocId }))
-  }, []);
+  }, [cardDocId, dispatch]);
 
   const dateFormat = (value) => {
     if (!value || value === 'unknown') {

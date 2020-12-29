@@ -1,0 +1,51 @@
+  .hierarchy-list {
+    width: 100%;
+    border: 1px solid #999999;
+    display: flex;
+  }
+  .hierarchy-tree {
+    width: 50%;
+    border-right: 1px solid #999999;
+    overflow-x: auto;
+  }
+  .hierarchy-tree:last-child {
+    border-right: none;
+  }
+  .hierarchy-tree-item {
+    min-height: 35px;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    flex-grow: 1;
+  }
+  .hierarchy-tree-item .item-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-grow: 1;
+  }
+  .tree-label {
+    margin: 0;
+    padding: 5px;
+    border-bottom: 1px solid #999999;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Roboto';
+    color: rgba(0, 0, 0, 0.85);
+  }
+  .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center
+  }
+  .MuiTreeItem-content:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+  .MuiTreeItem-iconContainer {
+    min-width: 36px;
+    justify-content: flex-end !important;
+    width: auto !important;
+  }
+  .MuiTreeItem-label {
+    display: contents !important;
+  }
