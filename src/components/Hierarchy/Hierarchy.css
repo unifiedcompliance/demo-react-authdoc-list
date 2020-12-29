@@ -49,3 +49,6 @@
   .MuiTreeItem-label {
     display: contents !important;
   }
+  .MuiTooltip-tooltip {
+    font-size: 0.8rem !important;
+  }
