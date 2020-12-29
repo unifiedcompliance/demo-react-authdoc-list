@@ -3,20 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   fetchGeographyHierarchyStart,
-  fetchSMHierarchyStart,
-  addDocumentToSelected,
-  removeDocumentFromSelected,
-  filterDocuments,
-  setExpandedNodesToggle
+  fetchSMHierarchyStart
 } from '../../store/actions/documentList';
 
 import { HIERARCHY_GEOGRAPHY, HIERARCHY_SUBJECT_MATTER } from '../../store/constant';
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, TextField, Button, Divider, Typography, Checkbox, CircularProgress, Dialog } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-
-import DocumentTree from '../../components/DocumentTree';
+import { Box, Button, Divider, Typography, CircularProgress, Dialog } from '@material-ui/core';
+import SearchBar from "material-ui-search-bar";
+import Hierarchy from "../../components/Hierarchy";
 import AuthorityDocumentCard from '../../parts/AuthorityDocumentCard';
 import styles from './styles';
 
@@ -37,6 +32,7 @@ const useStyles = makeStyles(
 const AuthorityDocuments = () => {
   const classes = useStyles();
   const [searchKey, setSearchKey] = useState('');
+  const [searchVal, setSearchVal] = useState('');
   const [isFiltering, setIsFiltering] = useState(false);
   const [hierarchy, setHierarchy] = useState(HIERARCHY_GEOGRAPHY);
   const [openCardDlg, setOpenCardDlg] = useState(false);
@@ -45,14 +41,10 @@ const AuthorityDocuments = () => {
 
   const {
     geographyTreeList,
-    selectedDocuments,
-    expandedTreeNodes,
-    filteredTreeNodes,
     isLoadingStatus,
   } = useSelector((state) => state.documentList);
   
   const handleHierarchy = async (newHierarchy) => {
-    console.log('[hierarchy]', newHierarchy);
     setHierarchy(newHierarchy);
     switch (newHierarchy) {
       case HIERARCHY_GEOGRAPHY:
@@ -66,67 +58,32 @@ const AuthorityDocuments = () => {
     }
   };
 
-  const onSelectDocument = (e, doc, checked) => {
-    e.stopPropagation();
-    if (checked) {
-      dispatch(addDocumentToSelected(doc))
-    } else {
-      dispatch(removeDocumentFromSelected(doc))
-    } 
+  const handleSearch = () => {
+    setSearchKey(searchVal);
+    searchKey === '' ? setIsFiltering(false) : setIsFiltering(true);
   }
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleFilterDocuments();
-    }
-  }
-
-  const handleChangeSearchKey = (e) => {
-    setSearchKey(e.target.value);
-    if (e.target.value === '') {
-      setIsFiltering(false);
-      dispatch(filterDocuments({ searchKey: '', hierarchy }));
-    }
-  }
-
-  const onShowDocumentCard = (e, docId) => {
-    e.stopPropagation();
+  const onShowDocumentCard = (docId) => {
     setCardDocId(docId);
     setOpenCardDlg(true);
   }
 
-  const handleFilterDocuments = () => {
-    searchKey === '' ? setIsFiltering(false) : setIsFiltering(true);
-    dispatch(filterDocuments({ searchKey, hierarchy }));
-  }
-  
-  const handleTreeToggle = (e, nodes) => {
-    dispatch(setExpandedNodesToggle({ nodes }));
-  }
-
   useEffect(() => {
     dispatch(fetchGeographyHierarchyStart({ isFiltering }));
-  }, []);
+  }, [dispatch, isFiltering]);
 
   return (
     <>
       <Box width='100%' mt={8} display="flex" p={2} boxSizing="border-box">
-        <TextField
+        <SearchBar
           placeholder="Search Authority Documents"
           size="small"
           type="search"
           variant="outlined"
           style={{ flexGrow: 1 }}
-          onChange={(e) => handleChangeSearchKey(e)}
-          onKeyDown={(e) => handleKeyDown(e)}
+          onChange={(val) => setSearchVal(val)}
+          onRequestSearch={() => handleSearch()}
         />
-        <Button
-          endIcon={<SearchIcon />}
-          style={{ textTransform: 'capitalize' }}
-          onClick={handleFilterDocuments}
-        >
-          Click to Search
-        </Button>
       </Box>
       <Divider />
       <Box display='flex' alignItems="center" p={2} py={1}>
@@ -137,39 +94,14 @@ const AuthorityDocuments = () => {
         </div>
       </Box>
       <div className="documents">
-        <div className="document-tree">
-          <p className="tree-label">Categories and Authority Documents</p>
-          <DocumentTree
-            treeData={geographyTreeList}
-            expandedTreeNodes={expandedTreeNodes}
-            filteredTreeNodes={filteredTreeNodes}
-            isFiltering={isFiltering}
-            handleNodeToggle={handleTreeToggle}
-            handleSelectDocument={onSelectDocument}
-            handleShowDocumentCard={onShowDocumentCard}
-          />
-        </div>
-        <div className="selected-list">
-          <p className="tree-label">
-            <span>Selected List</span>
-            <span>Remove</span>
-          </p>
-          <ul className="selected-documents-list">
-            { selectedDocuments && selectedDocuments.map((item) => {
-              return (
-                <li key={item.id} className="selected-item">
-                  <span>{item.name}</span>
-                  <Checkbox
-                    defaultChecked
-                    color="primary"
-                    size="small"
-                    onClick={(e) => onSelectDocument(e, item, false)}
-                  />
-                </li>
-              )
-            }) }
-          </ul>
-        </div>
+        <Hierarchy
+            viewType="double"
+            treeLabel="Categories and Authority Documents"
+            selectedTreeLabel="Selected Authority Documents"
+            filterKey={searchKey}
+            treeItems={geographyTreeList}
+            handleInfoItem={onShowDocumentCard}
+        />
       </div>
       {
         openCardDlg &&

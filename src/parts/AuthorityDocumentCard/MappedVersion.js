@@ -5,25 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
-  list: {
-    flexGrow: 1,
-    position: "relative",
-    overflow: "auto",
-    maxHeight: 96,
-    border: "1px solid #ccc",
-  },
-  bigList: {
-    position: "relative",
-    overflow: "auto",
-    maxHeight: 480,
-    border: "1px solid #ccc",
-  },
-}));
 
 const MappedVersion = ({ data }) => {
   const memberName = (role) => {
@@ -51,8 +33,6 @@ const MappedVersion = ({ data }) => {
 
     return d.toLocaleDateString('en-US');
   };
-
-  const classes = useStyles();
 
   const memberOrganization = (role) => {
     if (data.Members && data.Members['@set']) {
