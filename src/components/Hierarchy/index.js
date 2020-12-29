@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
-import { Typography, Checkbox } from '@material-ui/core';
+import { Typography, Checkbox, Tooltip } from '@material-ui/core';
 import { InfoOutlined } from '@material-ui/icons';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
@@ -23,9 +23,11 @@ function ExtendedTreeItem(props) {
                 endIcon={item.icon}
                 label={
                     <div className="hierarchy-tree-item">
-                        <Typography className="item-label">
-                            {item.name}
-                        </Typography>
+                        <Tooltip title={item.name} placement="bottom">
+                            <Typography className="item-label">
+                                {item.name}
+                            </Typography>
+                        </Tooltip>
                         <>
                             {item.info &&
                             <span className="icon-wrapper" onClick={(e) => infoItem(e, item.id)}>
@@ -59,7 +61,7 @@ function ExtendedTreeItem(props) {
             </TreeItem>
         </>
     );
-};
+}
 
 export default class Hierarchy extends Component {
     constructor(props) {
